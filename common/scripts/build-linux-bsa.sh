@@ -53,7 +53,7 @@ build_bsa_kernel_driver()
         export CROSS_COMPILE=$TOP_DIR/$GCC
     fi
  ./setup.sh $TOP_DIR/edk2/ShellPkg/Application/bsa-acs
- ./linux_bsa_acs.sh
+ ./linux_bsa_acs.sh || true
  popd
 }
 
