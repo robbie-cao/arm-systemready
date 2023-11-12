@@ -91,7 +91,8 @@ get_bsa_src()
         git clone --depth 1 https://github.com/ARM-software/bsa-acs.git ShellPkg/Application/bsa-acs
     else
         echo "Downloading Arm BSA source code. TAG : $ARM_BSA_TAG"
-        git clone --depth 1 --branch $ARM_BSA_TAG https://github.com/ARM-software/bsa-acs.git ShellPkg/Application/bsa-acs
+        git clone https://github.com/ARM-software/bsa-acs.git ShellPkg/Application/bsa-acs
+        git -C ShellPkg/Application/bsa-acs checkout $ARM_BSA_TAG
     fi
     popd
     pushd  $TOP_DIR/edk2/ShellPkg/Application/bsa-acs
@@ -109,7 +110,8 @@ get_sbsa_src()
         git clone --depth 1 https://github.com/ARM-software/sbsa-acs.git ShellPkg/Application/sbsa-acs
     else
         echo "Downloading Arm SBSA source code. TAG : $ARM_SBSA_TAG"
-        git clone --depth 1 --branch $ARM_SBSA_TAG https://github.com/ARM-software/sbsa-acs.git ShellPkg/Application/sbsa-acs
+        git clone https://github.com/ARM-software/sbsa-acs.git ShellPkg/Application/sbsa-acs
+        git -C ShellPkg/Application/sbsa-acs checkout $ARM_SBSA_TAG
     fi
     popd
     pushd  $TOP_DIR/edk2/ShellPkg/Application/sbsa-acs
@@ -202,13 +204,15 @@ get_linux-acs_src()
       git clone --depth 1 https://git.gitlab.arm.com/linux-arm/linux-acs.git linux-acs
   else
       echo "Downloading Arm Linux ACS source code. TAG : ${ARM_LINUX_ACS_TAG}"
-      git clone --depth 1 --branch ${ARM_LINUX_ACS_TAG} https://git.gitlab.arm.com/linux-arm/linux-acs.git linux-acs
+      git clone https://git.gitlab.arm.com/linux-arm/linux-acs.git linux-acs
+      git -C linux-acs checkout ${ARM_LINUX_ACS_TAG}
   fi
 
   if [ $TARGET_ARCH != "arm" ]; then
     pushd $TOP_DIR/linux-${LINUX_KERNEL_VERSION}
     #The same patch is applicable BSA and SBSA
     echo "Applying Linux ACS xBSA Patch..."
+    git reset --hard v$LINUX_KERNEL_VERSION
     git am $TOP_DIR/linux-acs/kernel/src/0001-BSA-ACS-Linux-${LINUX_KERNEL_VERSION}.patch
     popd
   fi
