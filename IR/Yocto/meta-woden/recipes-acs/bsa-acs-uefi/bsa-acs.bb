@@ -7,6 +7,7 @@ LICENSE += "& Apache-2.0"
 LIC_FILES_CHKSUM += "file://ShellPkg/Application/bsa-acs/LICENSE.md;md5=2a944942e1496af1886903d274dedb13"
 COMPATIBLE_MACHINE:generic-arm64 = "generic-arm64"
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/bsa-acs:"
 SRC_URI += "git://github.com/ARM-software/bsa-acs;destsuffix=edk2/ShellPkg/Application/bsa-acs;protocol=https;branch=main;name=bsa-acs \
             git://github.com/tianocore/edk2-libc;destsuffix=edk2/edk2-libc;protocol=https;branch=master;name=edk2-libc \
             file://ir_bsa.patch \
